@@ -3,11 +3,12 @@
     "name": "TehnicalCh",
     "slug": "TehnicalCh",
     "version": "1.0.0",
+    "entryPoint": "expo-router/entry",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tehnicalch",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.paultb10.TehnicalCh"
@@ -44,7 +45,6 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
     }
   }
 }

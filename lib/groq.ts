@@ -1,7 +1,5 @@
 import { Recipe } from '../types';
 
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
-const UNSPLASH_KEY = process.env.UNSPLASH_KEY;
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 const systemPrompt = `You are a recipe assistant. The user will provide a general description. 
@@ -23,7 +21,7 @@ async function fetchImageForRecipe(title: string): Promise<string> {
     try {
         const query = encodeURIComponent(title);
         const res = await fetch(
-            `https://api.unsplash.com/search/photos?query=${query}&per_page=1&orientation=landscape&client_id=${UNSPLASH_KEY}`
+            `https://api.unsplash.com/search/photos?query=${query}&per_page=1&orientation=landscape&client_id=${process.env.EXPO_PUBLIC_UNSPLASH_KEY}`
         );
         const data = await res.json();
         const image = data.results?.[0]?.urls?.small_s3 || data.results?.[0]?.urls?.small || data.results?.[0]?.urls?.regular;
@@ -39,14 +37,14 @@ async function fetchImageForRecipe(title: string): Promise<string> {
 
 
 export const fetchRecipesFromAI = async (prompt: string): Promise<Recipe[]> => {
-    if (!GROQ_API_KEY) throw new Error('Missing GROQ_API_KEY');
+    if (!process.env.EXPO_PUBLIC_GROQ_API_KEY) throw new Error('Missing GROQ_API_KEY');
 
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${GROQ_API_KEY}`,
+                Authorization: `Bearer ${process.env.EXPO_PUBLIC_GROQ_API_KEY}`,
             },
             body: JSON.stringify({
                 model: 'llama-3.1-8b-instant',
